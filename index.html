@@ -42,14 +42,33 @@
   </footer>
 
   <script>
-    // Get Started 버튼 클릭 시 로그인 페이지로 이동 및 이름 입력 받기
+    // Get Started 버튼 클릭 시 로그인 창 표시 및 이름 입력 받기
     const getStartedBtn = document.getElementById('getStartedBtn');
     getStartedBtn.addEventListener('click', function() {
-      const name = prompt('Please enter your name:'); // 이름 입력 받기
-      if (name) {
-        localStorage.setItem('username', name); // 이름을 로컬 스토리지에 저장
-        window.location.href = 'login.html'; // 로그인 페이지 URL로 변경
-      }
+      const loginForm = document.createElement('div'); // 로그인 폼 요소 생성
+      loginForm.innerHTML = `
+        <h2>Login</h2>
+        <form id="loginForm">
+          <label for="nameInput">Name:</label>
+          <input type="text" id="nameInput" required>
+          <button type="submit">Submit</button>
+        </form>
+      `;
+
+      document.body.appendChild(loginForm); // 로그인 폼 요소 추가
+
+      const nameInput = document.getElementById('nameInput');
+      const loginFormElement = document.getElementById('loginForm');
+
+      // 로그인 폼 제출 시 이름을 로컬 스토리지에 저장하고 로그인 페이지로 이동
+      loginFormElement.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = nameInput.value;
+        if (name) {
+          localStorage.setItem('username', name);
+          window.location.href = 'login.html';
+        }
+      });
     });
   </script>
 </body>
